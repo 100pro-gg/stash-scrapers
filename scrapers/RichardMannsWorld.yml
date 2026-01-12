@@ -1,0 +1,37 @@
+name: Richard Mann's World
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - richardmannsworld.com/
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title: //div[@class="vidBox"]/h2/text()
+      Code:
+        selector: "{inputURL}"
+        postProcess:
+          - replace:
+            - regex: .+\/(.+?)\/$
+              with: $1
+      Details: //span[@class="txt3"]/strong/text() | //span[@class="txt3"]/text()
+      #Director:
+      URLs:
+        fixed: "{inputURL}"
+      Date:
+        selector: //video/@poster
+        postProcess:
+          - replace:
+            - regex: .+uploads\/(\d\d\d\d\/\d\d)\/.+$
+              with: $1
+          - parseDate: 2006/01
+      Image: //video/@poster
+      Studio:
+        Name:
+          fixed: "Richard Mann's World"
+      Tags:
+        Name: //span[@itemprop="keywords"]/a/text()
+      Performers:
+        Name: //span[@itemprop="actors"]/a/text()
+      #Groups:
+      #  Name:
