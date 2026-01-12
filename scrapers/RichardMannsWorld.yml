@@ -9,22 +9,21 @@ xPathScrapers:
     scene:
       Title: //div[@class="vidBox"]/h2/text()
       Code:
-        selector: "{inputURL}"
+        selector: //div[@class="vidBox"]/h2/text()
         postProcess:
           - replace:
-            - regex: .+\/(.+?)\/$
-              with: $1
+            - regex: \s
+              with: "-"
       Details: //span[@class="txt3"]/strong/text() | //span[@class="txt3"]/text()
-      #Director:
       URLs:
         fixed: "{inputURL}"
       Date:
         selector: //video/@poster
         postProcess:
           - replace:
-            - regex: .+uploads\/(\d\d\d\d\/\d\d)\/.+$
-              with: $1
-          - parseDate: 2006/01
+            - regex: .+uploads\/(\d\d\d\d)\/(\d\d)\/.+$
+              with: '$1 $2'
+          - parseDate: 2006 01
       Image: //video/@poster
       Studio:
         Name:
@@ -33,5 +32,4 @@ xPathScrapers:
         Name: //span[@itemprop="keywords"]/a/text()
       Performers:
         Name: //span[@itemprop="actors"]/a/text()
-      #Groups:
-      #  Name:
+        URLs: //span[@itemprop="actors"]/@a
